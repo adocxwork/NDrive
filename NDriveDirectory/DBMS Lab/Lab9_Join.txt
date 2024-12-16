@@ -1,0 +1,114 @@
+1) Display employee number, employee name, department no and department name of 
+employees working for any department 
+mysql> select ssn, fname, dno, dname from employee, department where employee.dno = department.dnumber;
++-----------+----------+------+----------------+
+| ssn       | fname    | dno  | dname          |
++-----------+----------+------+----------------+
+| 888665555 | James    |    1 | Headquarters   |
+| 987654321 | Jennifer |    4 | Administration |
+| 987987987 | Ahmad    |    4 | Administration |
+| 999887777 | Alicia   |    4 | Administration |
+| 123456789 | John     |    5 | Research       |
+| 333445555 | Franklin |    5 | Research       |
+| 453453453 | Joyce    |    5 | Research       |
+| 666884444 | Ramesh   |    5 | Research       |
++-----------+----------+------+----------------+
+2) Displaying department details with its manager details
+mysql> select dno, dname, Fname Manager_Name, Sex, mgr_start_date, Salary, mgr_ssn, Super_ssn, Bdate, Address Mgr_Address from department inner join employee where mgr_ssn=ssn;
++------+----------------+--------------+------+----------------+----------+-----------+-----------+------------+-------------------------+
+| dno  | dname          | Manager_Name | Sex  | mgr_start_date | Salary   | mgr_ssn   | Super_ssn | Bdate      | Mgr_Address             |
++------+----------------+--------------+------+----------------+----------+-----------+-----------+------------+-------------------------+
+|    1 | Headquarters   | James        | M    | 1981-06-19     | 55000.00 | 888665555 | NULL      | 1937-11-10 | 450 Stone, Houston, TX  |
+|    4 | Administration | Jennifer     | F    | 1995-01-01     | 43000.00 | 987654321 | 888665555 | 1941-06-20 | 201 Berry, Bellaire, TX |
+|    5 | Research       | Franklin     | M    | 1988-05-22     | 40000.00 | 333445555 | 888665555 | 1955-12-08 | 638 Voss, Houston, TX   |
++------+----------------+--------------+------+----------------+----------+-----------+-----------+------------+-------------------------+
+3) Display employee number, employee name, his/her manager id, manager name
+mysql> select e.SSN, e.Fname, d.Mgr_SSN, m.fname Mgr_Name from employee e join department d on e.dno = d.dnumber join employee m on d.mgr_ssn = m.ssn;
++-----------+----------+-----------+----------+
+| SSN       | Fname    | Mgr_SSN   | Mgr_Name |
++-----------+----------+-----------+----------+
+| 123456789 | John     | 333445555 | Franklin |
+| 333445555 | Franklin | 333445555 | Franklin |
+| 453453453 | Joyce    | 333445555 | Franklin |
+| 666884444 | Ramesh   | 333445555 | Franklin |
+| 888665555 | James    | 888665555 | James    |
+| 987654321 | Jennifer | 987654321 | Jennifer |
+| 987987987 | Ahmad    | 987654321 | Jennifer |
+| 999887777 | Alicia   | 987654321 | Jennifer |
++-----------+----------+-----------+----------+
+4) Display employee number, employee name, department no and department name of 
+employees working for any department with Manager SSN =333445555
+mysql> select e.SSN, e.Fname, e.dno, d.dname from employee e join department d on e.dno = d.dnumber where mgr_ssn='33344
+5555';
++-----------+----------+------+----------+
+| SSN       | Fname    | dno  | dname    |
++-----------+----------+------+----------+
+| 123456789 | John     |    5 | Research |
+| 333445555 | Franklin |    5 | Research |
+| 453453453 | Joyce    |    5 | Research |
+| 666884444 | Ramesh   |    5 | Research |
++-----------+----------+------+----------+
+5) Display department name and number of employees working for that department
+mysql> select dname, count(ssn) from department, employee where dnumber = dno group by dno;
++----------------+------------+
+| dname          | count(ssn) |
++----------------+------------+
+| Headquarters   |          1 |
+| Administration |          3 |
+| Research       |          4 |
++----------------+------------+
+6) Display department name and number of employees working for that department. 
+Consider only those department that have more than 2 employees in the department
+mysql> select dname, count(ssn) from department, employee where dnumber = dno group by dno having count(ssn) > 2;
++----------------+------------+
+| dname          | count(ssn) |
++----------------+------------+
+| Administration |          3 |
+| Research       |          4 |
++----------------+------------+
+7) Display number of persons working in department “Research”
+mysql> select count(*) from employee inner join department on dno = dnumber and dname="Research";
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+8) Display employee name and employee number of employees who work in the same 
+department as ‘JOHN’ work. Display employees other than ‘JOHN’.
+mysql> select e.Fname, e.ssn from employee t inner join employee e on t.Fname = "John" and t.dno = e.dno;
++----------+-----------+
+| Fname    | ssn       |
++----------+-----------+
+| John     | 123456789 |
+| Franklin | 333445555 |
+| Joyce    | 453453453 |
+| Ramesh   | 666884444 |
++----------+-----------+
+9) Demonstrate left outer join on EMP and DEPT tables
+mysql> select fname, dno, dnumber, dname from employee left join department on dno = dnumber;
++----------+------+---------+----------------+
+| fname    | dno  | dnumber | dname          |
++----------+------+---------+----------------+
+| John     |    5 |       5 | Research       |
+| Franklin |    5 |       5 | Research       |
+| Joyce    |    5 |       5 | Research       |
+| Ramesh   |    5 |       5 | Research       |
+| James    |    1 |       1 | Headquarters   |
+| Jennifer |    4 |       4 | Administration |
+| Ahmad    |    4 |       4 | Administration |
+| Alicia   |    4 |       4 | Administration |
++----------+------+---------+----------------+
+10) Demonstrate right outer join on EMP and DEPT tables
+mysql> select fname, dno, dnumber, dname from employee right join department on dno = dnumber;
++----------+------+---------+----------------+
+| fname    | dno  | dnumber | dname          |
++----------+------+---------+----------------+
+| James    |    1 |       1 | Headquarters   |
+| Jennifer |    4 |       4 | Administration |
+| Ahmad    |    4 |       4 | Administration |
+| Alicia   |    4 |       4 | Administration |
+| John     |    5 |       5 | Research       |
+| Franklin |    5 |       5 | Research       |
+| Joyce    |    5 |       5 | Research       |
+| Ramesh   |    5 |       5 | Research       |
++----------+------+---------+----------------+

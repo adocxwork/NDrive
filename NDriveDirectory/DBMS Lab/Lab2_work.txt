@@ -1,0 +1,36 @@
+database - University_017
+table - student,dept
+primary key, foreign key
+create database university_017;
+use university_017;
+create table Department(dept_id int, dept varchar(10) primary key, HOD varchar(30));
+insert into Department values(101, 'CSE', 'Sanjay');
+insert into Department values(102, 'ECE', 'Virat');
+insert into Department values(103, 'MEC', 'Bumrah');
+insert into Department values(104, 'CIVIL', 'Rohit');
+create table student(eno char(7) primary key, name varchar(30), branch varchar
+(10), foreign key (branch) references department(dept));
+insert into student values('231B017', 'Aditya Gupta', 'CSE');
+insert into student values('231B018', 'Aditya Sharma', 'CSE');
+insert into student values('231B341', 'Soham Ghosh', 'ECE');
+insert into student values('231B045', 'Y. Jaiswal', 'CIVIL');
+
+
+mysql> desc department;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| dept_id | int         | YES  |     | NULL    |       |
+| dept    | varchar(10) | NO   | PRI | NULL    |       |
+| HOD     | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eno    | char(7)     | NO   | PRI | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| branch | varchar(10) | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+

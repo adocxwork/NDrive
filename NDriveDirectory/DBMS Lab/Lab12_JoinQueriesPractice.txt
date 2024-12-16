@@ -1,0 +1,70 @@
+### 1) Retrieve the full name of employees and the name of the department they work in:
+
+SELECT 
+    e.Fname AS First_Name, 
+    e.Lname AS Last_Name, 
+    d.Dname AS Department_Name
+FROM 
+    EMPLOYEE e
+JOIN 
+    DEPARTMENT d ON e.Dno = d.Dnumber;
+
+
+### 2) List all employees who work on projects managed by the 'Research' department, showing the employee's full name and project name:
+
+SELECT 
+    e.Fname AS First_Name, 
+    e.Lname AS Last_Name, 
+    p.Pname AS Project_Name
+FROM 
+    EMPLOYEE e
+JOIN 
+    WORKS_ON w ON e.Ssn = w.Essn
+JOIN 
+    PROJECT p ON w.Pno = p.Pnumber
+JOIN 
+    DEPARTMENT d ON p.Dnum = d.Dnumber
+WHERE 
+    d.Dname = 'Research';
+
+
+### 3) Find the total hours worked by each employee on all projects combined:
+
+SELECT 
+    e.Fname AS First_Name, 
+    e.Lname AS Last_Name, 
+    SUM(w.Hours) AS Total_Hours
+FROM 
+    EMPLOYEE e
+JOIN 
+    WORKS_ON w ON e.Ssn = w.Essn
+GROUP BY 
+    e.Fname, e.Lname;
+
+
+### 4) Show the project names and the names of employees who work on them, ordered by project name:
+
+SELECT 
+    p.Pname AS Project_Name, 
+    e.Fname AS First_Name, 
+    e.Lname AS Last_Name
+FROM 
+    PROJECT p
+JOIN 
+    WORKS_ON w ON p.Pnumber = w.Pno
+JOIN 
+    EMPLOYEE e ON w.Essn = e.Ssn
+ORDER BY 
+    p.Pname;
+
+
+### 5) Display the department name along with the total number of employees working in each department:
+SELECT 
+    d.Dname AS Department_Name, 
+    COUNT(e.Ssn) AS Total_Employees
+FROM 
+    DEPARTMENT d
+LEFT JOIN 
+    EMPLOYEE e ON d.Dnumber = e.Dno
+GROUP BY 
+    d.Dname;

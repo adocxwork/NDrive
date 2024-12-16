@@ -1,0 +1,130 @@
+What are Triggers?
+
+Triggers are database actions executed automatically in response to specific changes (like INSERT, UPDATE, or DELETE) in a table.
+Trigger Action Time:
+
+BEFORE: Executes before the change occurs.
+AFTER: Executes after the change is completed.
+Triggering Events:
+
+INSERT: Activates when a new row is added.
+UPDATE: Activates when an existing row is modified.
+DELETE: Activates when a row is removed.
+Syntax:
+
+A trigger is created using the CREATE TRIGGER statement and defined for each affected row with a FOR EACH ROW clause.
+Accessing Data:
+
+Use OLD for values before the change (for UPDATE and DELETE).
+Use NEW for values after the change (for INSERT and UPDATE).
+Multiple Triggers:
+
+You can define multiple triggers with the same event and action time.
+Use FOLLOWS or PRECEDES to control their execution order.
+Dropping Triggers:
+
+Use DROP TRIGGER schema_name.trigger_name.
+
+-- Query --
+
+create database trigger_017;
+use trigger_017;
+create table stu_perf1(eno decimal(6,0), name varchar(10), sub1 decimal(2,0), sub2 decimal(3,0), grade char(1));
+insert into stu_perf1 values(1,"Adi", 50, 55, "B");
+insert into stu_perf1 values(2,"Aditya", 40, 45, "C");
+insert into stu_perf1 values(3,"Aditya Ji", 30, 35, "D");
+
+create table log_sf(eno decimal(6,0), name varchar(10), sub1 decimal(2,0), sub2 decimal(3,0), grade char(1), operatioin varchar(25), username varchar(20), op_time timestamp);
+insert into log_sf values(1, "Adi", 40, 50, "D", "Del1", "@adi", "2024-11-03 12:22:33");
+insert into log_sf values(2, "Adi", 40, 50, "D", "Del1", "@adi", now());
+insert into log_sf values(2, "Aditya", 30, 20, "F", "Del2", "@aditya", now());
+
+1. Trigger for `smarks` Table
+-- Task: Calculate the `per` field before inserting a row.
+
+DELIMITER //
+
+CREATE TRIGGER ins_per_smarks
+BEFORE INSERT
+ON smarks
+FOR EACH ROW
+BEGIN
+    SET NEW.per = (NEW.dbms + NEW.ds) / 2;
+END; //
+
+DELIMITER ;
+
+-- Test:
+INSERT INTO smarks (eno, name, dbms, ds) VALUES (123, 'Nilesh', 70, 80);
+SELECT * FROM smarks;
+
+2. Trigger for `stu_perf1` Table
+-- Task: Log update details in `log_sf` table after updating `stu_perf1`.
+
+DELIMITER //
+
+CREATE TRIGGER trig_sp_update
+AFTER UPDATE
+ON stu_perf1
+FOR EACH ROW
+BEGIN
+    INSERT INTO log_sf
+    VALUES (OLD.eno, OLD.name, OLD.sub1, OLD.sub2, OLD.grade, "Update", USER(), NOW());
+END; //
+
+DELIMITER ;
+
+-- Test:
+UPDATE stu_perf1 SET sub1 = 85 WHERE eno = 123;
+SELECT * FROM log_sf;
+
+3. Trigger for `sgrade` Table
+Assign grades based on `dbms` scores before inserting a row.
+
+DELIMITER //
+
+CREATE TRIGGER ins_grade
+BEFORE INSERT
+ON sgrade
+FOR EACH ROW
+BEGIN
+    IF (NEW.dbms >= 50) THEN
+        SET NEW.grade = 'B';
+    ELSEIF (NEW.dbms >= 35) THEN
+        SET NEW.grade = 'P';
+    ELSE
+        SET NEW.grade = 'F';
+    END IF;
+END; //
+
+DELIMITER ;
+
+-- Test:
+INSERT INTO sgrade (eno, name, dbms, ds) VALUES (126, 'Ramesh', 45, 80);
+SELECT * FROM sgrade;
+
+4. Trigger for `emp` Table
+Track field changes in `data_tracking` table after updating `emp`.
+
+DELIMITER $$
+
+CREATE TRIGGER update_data
+AFTER UPDATE ON emp
+FOR EACH ROW
+BEGIN
+    IF (NEW.fname != OLD.fname) THEN
+        INSERT INTO data_tracking (field, old_value, new_value, modified)
+        VALUES ('fname', OLD.fname, NEW.fname, NOW());
+    END IF;
+
+    IF (NEW.salary != OLD.salary) THEN
+        INSERT INTO data_tracking (field, old_value, new_value, modified)
+        VALUES ('salary', OLD.salary, NEW.salary, NOW());
+    END IF;
+END $$
+
+DELIMITER ;
+
+-- Test
+UPDATE emp SET fname = 'Raj', salary = 60000 WHERE ssn = '123456789';
+SELECT * FROM data_tracking;

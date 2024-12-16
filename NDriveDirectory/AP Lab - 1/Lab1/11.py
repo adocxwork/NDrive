@@ -1,0 +1,8 @@
+m1 = int(input("Enter Marks : "))
+m2 = int(input("Enter Marks : "))
+m3 = int(input("Enter Marks : "))
+m4 = int(input("Enter Marks : "))
+m5 = int(input("Enter Marks : "))
+sum = (m1+m2+m3+m4+m5)
+print("Total marks :", sum)
+print("Percentage :", (sum/500)*100)

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<style>
+			.dropdown {
+				position: relative;
+				display: inline-block;
+			}
+			.content {
+				position: absolute;
+				display: none;
+			}
+			button {
+				width: 100%;
+				color: red;
+			}
+			.dropdown:hover .content{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dropdown">
+			<button>Dropdown</button>
+			<div class="content">
+				<button>Link 1</button>
+				<button>Link 2</button>
+				<button>Link 3</button>
+			</div>
+		</div>
+	</body>
+</html>

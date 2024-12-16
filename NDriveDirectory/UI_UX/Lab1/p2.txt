@@ -1,0 +1,24 @@
+Bad project titles :-
+Data Visualizer
+CropCare
+E-buy
+Decentralized Drive
+Automated_CLI
+
+Good project titles :-
+2D Map Navogation Application for University purpose
+DOORMONK: A WEBAPP FOR GALLERY BOOKING
+AlgoViz: A Website to Learn Animated Version of Algorithm
+AUTOMOBILE AFTER SALES (SERVICE CONTRACT PACKAGES) PROJECT
+CAFE PRO:REVOLUTIONALIZING THE WAY YOU MANAGE YOUR CAFE BUSINESS
+
+When choosing project titles, the goal is to ensure thatthey are clear,
+specific, and relevant to the content and objectives of the project.
+Clarity: The title should be easy to understand and unambiguous.
+It should give a clear idea of the project's main focus without
+requiring further explanation.
+Specificity: The title should be specific enough to convey the
+project's scope and objectives. It should mention key elements like the
+subject, methodology, or the outcome expected.
+Relevance: The title should be directly related to the project's
+content and purpose. It should reflect the core theme and make
