@@ -19,7 +19,7 @@ def measure_sorting_time(n):
     end_time = time.time()
     return end_time - start_time
 
-n_values = [100, 500, 1000, 5000, 10000, 20000, 50000]
+n_values = [10000, 20000, 30000, 40000, 50000]
 time_taken = []
 
 for n in n_values:
@@ -29,4 +29,4 @@ print("Number of elements : n | Time taken")
 print("-----------------------------------")
 
 for i in range(len(n_values)):
-    print(n_values[i], "\t\t", time_taken[i])
+    print(n_values[i], "\t\t", f"{time_taken[i]:0.5f}")
