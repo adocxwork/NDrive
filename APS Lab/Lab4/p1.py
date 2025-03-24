@@ -33,7 +33,7 @@ def measure_sort_time(n):
     return end_time - start_time
 
 def run_experiment():
-    ns = [10, 100, 1000, 10000, 100000]
+    ns = [1000, 2000, 3000, 4000, 5000]
     results = []
 
     for n in ns:

@@ -1,0 +1,113 @@
+**Question 1 – Conference Meeting Scheduling:**  
+*Approach:*  
+• Sort all meetings by their finish time.  
+• Select the first meeting (earliest finish) and then choose each next meeting whose start time is after the finish time of the last selected meeting.  
+
+*Example (given input):*  
+• Meetings sorted by finish time: (9–10), (10:30–11:30), (11–12), (10–12).  
+• Best selection is Meeting 1 (9–10) and then either Meeting 2 (10:30–11:30) or Meeting 4 (11–12) – maximum 2 meetings can be scheduled without overlap.
+
+---
+
+**Question 2 – Packing a Suitcase (Knapsack Problem):**  
+*Approach:*  
+• This problem is a knapsack problem. In the fractional version, you’d sort items by value-to-weight ratio and pack items with the highest ratio first until the weight limit is reached. (For 0/1 knapsack, dynamic programming is used.)  
+
+*Example (given input):*  
+• Laptop: value = \$1000, weight = 2 kg (ratio 500)  
+• Clothes: value = \$500, weight = 3 kg (ratio ~167)  
+• Books: value = \$400, weight = 4 kg (ratio 100)  
+• Maximum weight = 5 kg  
+• The best packing is Laptop (2 kg) + Clothes (3 kg) giving a total value of \$1500.
+
+---
+
+**Question 3 – Freelance Job Scheduling:**  
+*Approach:*  
+• This is a job scheduling problem with deadlines. Use a greedy algorithm:  
+ – Sort jobs in descending order of payment.  
+ – For each job, assign it to the latest available slot before its deadline.  
+
+*Example (given input):*  
+• Job 1: ₹500 (deadline = 2 days)  
+• Job 2: ₹1000 (deadline = 1 day)  
+• Job 3: ₹700 (deadline = 2 days)  
+• Best schedule: Do Job 2 on day 1 and Job 3 on day 2, yielding a maximum income of ₹1700.
+
+---
+
+**Question 4 – Shortest Path in a Graph (Dijkstra’s Algorithm):**  
+*Approach:*  
+• Use Dijkstra’s algorithm by initializing distances from the source (Home = A) and updating the shortest distances to each neighbor via a priority queue.  
+
+*Example (given input):*  
+Graph details:  
+ – A → B (2), A → C (4)  
+ – B → C (1), B → D (7)  
+ – C → D (3), C → E (5)  
+ – D → E (2)  
+• Shortest path from A to E: A → B → C → E with a total weight of 2 + 1 + 5 = 8 (an alternate route A → B → C → D → E also gives 8).
+
+---
+
+**Question 5 – Pseudocode and Time Complexity of Greedy Algorithms:**  
+
+1. **Meeting Scheduling (Activity Selection):**
+   ```
+   sort(meetings, by finish time)
+   selected = []
+   last_end = -∞
+   for meeting in meetings:
+       if meeting.start >= last_end:
+           selected.append(meeting)
+           last_end = meeting.end
+   return selected
+   ```
+   *Time Complexity:* O(n log n) due to sorting.
+
+2. **Fractional Knapsack (Greedy Approach):**
+   ```
+   sort(items, by value/weight ratio in descending order)
+   remaining = capacity
+   total_value = 0
+   for item in items:
+       if item.weight <= remaining:
+           total_value += item.value
+           remaining -= item.weight
+       else:
+           fraction = remaining / item.weight
+           total_value += item.value * fraction
+           break
+   return total_value
+   ```
+   *Time Complexity:* O(n log n) due to sorting.
+
+3. **Job Scheduling with Deadlines:**
+   ```
+   sort(jobs, by payment in descending order)
+   for each job in jobs:
+       for slot = job.deadline downto 1:
+           if slot is free:
+               assign job to slot
+               break
+   return scheduled_jobs, total_income
+   ```
+   *Time Complexity:* O(n log n + n * max_deadline) in the worst case.
+
+4. **Dijkstra’s Algorithm for Shortest Path:**
+   ```
+   initialize distance[v] = ∞ for all nodes v; distance[source] = 0
+   create a priority queue and add source with distance 0
+   while priority queue is not empty:
+       u = extract node with smallest distance
+       for each neighbor v of u:
+           if distance[u] + weight(u, v) < distance[v]:
+               distance[v] = distance[u] + weight(u, v)
+               update v in the priority queue
+   return distance array
+   ```
+   *Time Complexity:* O(E log V) when using a min-priority queue.
+
+---
+
+Each approach is based on the greedy strategy, making a locally optimal choice at each step with a focus on overall efficiency.
