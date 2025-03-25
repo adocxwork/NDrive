@@ -1,113 +1,150 @@
-**Question 1 – Conference Meeting Scheduling:**  
-*Approach:*  
-• Sort all meetings by their finish time.  
-• Select the first meeting (earliest finish) and then choose each next meeting whose start time is after the finish time of the last selected meeting.  
+### **Answer to Question 5: Algorithms, Pseudocode, and Time Complexity**  
 
-*Example (given input):*  
-• Meetings sorted by finish time: (9–10), (10:30–11:30), (11–12), (10–12).  
-• Best selection is Meeting 1 (9–10) and then either Meeting 2 (10:30–11:30) or Meeting 4 (11–12) – maximum 2 meetings can be scheduled without overlap.
+Below are the **greedy algorithms** discussed in class, along with their **pseudocode** and **time complexity analysis**:
 
 ---
 
-**Question 2 – Packing a Suitcase (Knapsack Problem):**  
-*Approach:*  
-• This problem is a knapsack problem. In the fractional version, you’d sort items by value-to-weight ratio and pack items with the highest ratio first until the weight limit is reached. (For 0/1 knapsack, dynamic programming is used.)  
+## **1. Knapsack Problem (Fractional Knapsack - Greedy Approach)**
+**Approach:**  
+- Sort items by **value/weight ratio**.  
+- Pick the highest ratio items until the bag is full.  
 
-*Example (given input):*  
-• Laptop: value = \$1000, weight = 2 kg (ratio 500)  
-• Clothes: value = \$500, weight = 3 kg (ratio ~167)  
-• Books: value = \$400, weight = 4 kg (ratio 100)  
-• Maximum weight = 5 kg  
-• The best packing is Laptop (2 kg) + Clothes (3 kg) giving a total value of \$1500.
-
----
-
-**Question 3 – Freelance Job Scheduling:**  
-*Approach:*  
-• This is a job scheduling problem with deadlines. Use a greedy algorithm:  
- – Sort jobs in descending order of payment.  
- – For each job, assign it to the latest available slot before its deadline.  
-
-*Example (given input):*  
-• Job 1: ₹500 (deadline = 2 days)  
-• Job 2: ₹1000 (deadline = 1 day)  
-• Job 3: ₹700 (deadline = 2 days)  
-• Best schedule: Do Job 2 on day 1 and Job 3 on day 2, yielding a maximum income of ₹1700.
-
----
-
-**Question 4 – Shortest Path in a Graph (Dijkstra’s Algorithm):**  
-*Approach:*  
-• Use Dijkstra’s algorithm by initializing distances from the source (Home = A) and updating the shortest distances to each neighbor via a priority queue.  
-
-*Example (given input):*  
-Graph details:  
- – A → B (2), A → C (4)  
- – B → C (1), B → D (7)  
- – C → D (3), C → E (5)  
- – D → E (2)  
-• Shortest path from A to E: A → B → C → E with a total weight of 2 + 1 + 5 = 8 (an alternate route A → B → C → D → E also gives 8).
+**Pseudocode:**
+```python
+sort(items, by value/weight ratio in descending order)
+remaining_capacity = max_weight
+total_value = 0
+for item in items:
+    if item.weight <= remaining_capacity:
+        total_value += item.value
+        remaining_capacity -= item.weight
+    else:
+        fraction = remaining_capacity / item.weight
+        total_value += item.value * fraction
+        break
+return total_value
+```
+**Time Complexity:**  
+- Sorting: **O(n log n)**
+- Iteration: **O(n)**
+- **Total: O(n log n)**  
 
 ---
 
-**Question 5 – Pseudocode and Time Complexity of Greedy Algorithms:**  
+## **2. Job Sequencing with Deadlines**
+**Approach:**  
+- Sort jobs **by profit in descending order**.  
+- Schedule each job in the **latest available slot** before its deadline.  
 
-1. **Meeting Scheduling (Activity Selection):**
-   ```
-   sort(meetings, by finish time)
-   selected = []
-   last_end = -∞
-   for meeting in meetings:
-       if meeting.start >= last_end:
-           selected.append(meeting)
-           last_end = meeting.end
-   return selected
-   ```
-   *Time Complexity:* O(n log n) due to sorting.
-
-2. **Fractional Knapsack (Greedy Approach):**
-   ```
-   sort(items, by value/weight ratio in descending order)
-   remaining = capacity
-   total_value = 0
-   for item in items:
-       if item.weight <= remaining:
-           total_value += item.value
-           remaining -= item.weight
-       else:
-           fraction = remaining / item.weight
-           total_value += item.value * fraction
-           break
-   return total_value
-   ```
-   *Time Complexity:* O(n log n) due to sorting.
-
-3. **Job Scheduling with Deadlines:**
-   ```
-   sort(jobs, by payment in descending order)
-   for each job in jobs:
-       for slot = job.deadline downto 1:
-           if slot is free:
-               assign job to slot
-               break
-   return scheduled_jobs, total_income
-   ```
-   *Time Complexity:* O(n log n + n * max_deadline) in the worst case.
-
-4. **Dijkstra’s Algorithm for Shortest Path:**
-   ```
-   initialize distance[v] = ∞ for all nodes v; distance[source] = 0
-   create a priority queue and add source with distance 0
-   while priority queue is not empty:
-       u = extract node with smallest distance
-       for each neighbor v of u:
-           if distance[u] + weight(u, v) < distance[v]:
-               distance[v] = distance[u] + weight(u, v)
-               update v in the priority queue
-   return distance array
-   ```
-   *Time Complexity:* O(E log V) when using a min-priority queue.
+**Pseudocode:**
+```python
+sort(jobs, by profit in descending order)
+for job in jobs:
+    for slot = job.deadline downto 1:
+        if slot is free:
+            assign job to slot
+            break
+return scheduled_jobs, total_profit
+```
+**Time Complexity:**  
+- Sorting: **O(n log n)**
+- Iteration: **O(n × max_deadline)**
+- **Total: O(n log n) (if deadline is small)**  
 
 ---
 
-Each approach is based on the greedy strategy, making a locally optimal choice at each step with a focus on overall efficiency.
+## **3. Huffman Coding (Optimal Prefix Code)**
+**Approach:**  
+- Use a **min-heap** to build a Huffman tree.  
+- Merge the **two smallest frequency nodes** at each step.  
+
+**Pseudocode:**
+```python
+create min_heap from character frequencies
+while heap has more than one node:
+    left = extract_min(heap)
+    right = extract_min(heap)
+    new_node = merge(left, right) with sum of frequencies
+    insert new_node into heap
+return heap_root (Huffman Tree)
+```
+**Time Complexity:**  
+- Building heap: **O(n)**
+- Extracting and merging: **O(n log n)**
+- **Total: O(n log n)**  
+
+---
+
+## **4. Prim’s Algorithm (Minimum Spanning Tree)**
+**Approach:**  
+- Start with **any node**.  
+- Add the **smallest edge** that connects a new node.  
+- Repeat until all nodes are included.  
+
+**Pseudocode:**
+```python
+start from any node
+mark it as visited
+while not all nodes are included:
+    select the smallest edge connecting a visited and unvisited node
+    mark the new node as visited
+    add edge to MST
+return MST
+```
+**Time Complexity:**  
+- Using **priority queue (Min-Heap): O(E log V)**  
+
+---
+
+## **5. Kruskal’s Algorithm (Minimum Spanning Tree)**
+**Approach:**  
+- Sort edges **by weight**.  
+- Pick the **smallest edge** that doesn’t form a cycle (use Disjoint Set).  
+
+**Pseudocode:**
+```python
+sort(edges, by weight)
+for edge in sorted edges:
+    if adding edge doesn’t form a cycle:
+        add edge to MST
+return MST
+```
+**Time Complexity:**  
+- Sorting edges: **O(E log E)**
+- Union-Find operations: **O(E log V)**
+- **Total: O(E log E) ≈ O(E log V)**  
+
+---
+
+## **6. Dijkstra’s Algorithm (Shortest Path)**
+**Approach:**  
+- Use a **priority queue** to explore the shortest distance to all nodes.  
+
+**Pseudocode:**
+```python
+initialize distance[source] = 0, others = ∞
+priority_queue.add(source, distance=0)
+while priority queue is not empty:
+    u = extract_min(priority_queue)
+    for each neighbor v of u:
+        if distance[u] + weight(u, v) < distance[v]:
+            update distance[v]
+            add/update v in priority queue
+return distance array
+```
+**Time Complexity:**  
+- Using **priority queue (Min-Heap): O(E log V)**  
+
+---
+
+### **Summary of Time Complexities**
+| Algorithm | Time Complexity |
+|-----------|----------------|
+| **Fractional Knapsack** | **O(n log n)** |
+| **Job Sequencing** | **O(n log n)** |
+| **Huffman Coding** | **O(n log n)** |
+| **Prim’s Algorithm** | **O(E log V)** |
+| **Kruskal’s Algorithm** | **O(E log V)** |
+| **Dijkstra’s Algorithm** | **O(E log V)** |
+
+Each of these algorithms follows the **Greedy approach**, making locally optimal choices at each step to achieve a globally optimal solution. 🚀
