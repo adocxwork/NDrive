@@ -1,150 +1,135 @@
-### **Answer to Question 5: Algorithms, Pseudocode, and Time Complexity**  
+### **1. Personal Software Process (PSP) and Team Software Process (TSP)**  
 
-Below are the **greedy algorithms** discussed in class, along with their **pseudocode** and **time complexity analysis**:
+#### **a. Objectives**  
+- **PSP:**  
+  - Helps individual developers improve their productivity and quality of work.  
+  - Focuses on defect prevention, estimation accuracy, and personal responsibility.  
+  - Encourages continuous self-improvement through data collection and analysis.  
 
----
+- **TSP:**  
+  - Extends PSP principles to teams for better project coordination.  
+  - Ensures structured planning, schedule management, and quality tracking.  
+  - Promotes teamwork, role assignment, and process discipline for successful project execution.  
 
-## **1. Knapsack Problem (Fractional Knapsack - Greedy Approach)**
-**Approach:**  
-- Sort items by **value/weight ratio**.  
-- Pick the highest ratio items until the bag is full.  
+#### **b. Framework Activities**  
+- **PSP Framework Activities:**  
+  1. **Planning:** Estimate time, effort, and project size.  
+  2. **Design & Code Reviews:** Identify and fix defects early.  
+  3. **Development:** Implement code while tracking time and defects.  
+  4. **Testing:** Perform unit tests and analyze defect sources.  
+  5. **Postmortem Analysis:** Review performance and improve future processes.  
 
-**Pseudocode:**
-```python
-sort(items, by value/weight ratio in descending order)
-remaining_capacity = max_weight
-total_value = 0
-for item in items:
-    if item.weight <= remaining_capacity:
-        total_value += item.value
-        remaining_capacity -= item.weight
-    else:
-        fraction = remaining_capacity / item.weight
-        total_value += item.value * fraction
-        break
-return total_value
-```
-**Time Complexity:**  
-- Sorting: **O(n log n)**
-- Iteration: **O(n)**
-- **Total: O(n log n)**  
+- **TSP Framework Activities:**  
+  1. **Team Formation & Planning:** Define roles, objectives, and work breakdown.  
+  2. **Development & Quality Assurance:** Follow structured iterations, with team reviews.  
+  3. **Monitoring & Tracking:** Collect project metrics and adjust accordingly.  
+  4. **Postmortem & Process Refinement:** Conduct retrospectives to improve team efficiency.  
 
----
-
-## **2. Job Sequencing with Deadlines**
-**Approach:**  
-- Sort jobs **by profit in descending order**.  
-- Schedule each job in the **latest available slot** before its deadline.  
-
-**Pseudocode:**
-```python
-sort(jobs, by profit in descending order)
-for job in jobs:
-    for slot = job.deadline downto 1:
-        if slot is free:
-            assign job to slot
-            break
-return scheduled_jobs, total_profit
-```
-**Time Complexity:**  
-- Sorting: **O(n log n)**
-- Iteration: **O(n × max_deadline)**
-- **Total: O(n log n) (if deadline is small)**  
+#### **c. Examples**  
+- **PSP Example:** A developer working on a new feature estimates development time, tracks defect origins, and refines their process after analyzing results.  
+- **TSP Example:** A software team collaborates on a project, conducts regular reviews, and refines development strategies based on past performance.  
 
 ---
 
-## **3. Huffman Coding (Optimal Prefix Code)**
-**Approach:**  
-- Use a **min-heap** to build a Huffman tree.  
-- Merge the **two smallest frequency nodes** at each step.  
+### **2. Process Models**  
 
-**Pseudocode:**
-```python
-create min_heap from character frequencies
-while heap has more than one node:
-    left = extract_min(heap)
-    right = extract_min(heap)
-    new_node = merge(left, right) with sum of frequencies
-    insert new_node into heap
-return heap_root (Huffman Tree)
-```
-**Time Complexity:**  
-- Building heap: **O(n)**
-- Extracting and merging: **O(n log n)**
-- **Total: O(n log n)**  
+#### **a. Aspect-Oriented Software Development (AOSD)**  
+- **Concept:**  
+  - Aims to improve modularity by separating cross-cutting concerns (e.g., logging, security, error handling) from core business logic.  
+  - Enhances maintainability by allowing independent development of aspects and core logic.  
 
----
+- **Diagram Representation:**  
+  - Various concerns (logging, security, error handling) are separately defined and then "woven" into the core application dynamically.  
 
-## **4. Prim’s Algorithm (Minimum Spanning Tree)**
-**Approach:**  
-- Start with **any node**.  
-- Add the **smallest edge** that connects a new node.  
-- Repeat until all nodes are included.  
+#### **b. Adaptive Software Development (ASD)**  
+- **Concept:**  
+  - Designed for projects with highly dynamic requirements.  
+  - Uses a continuous cycle of **Speculate → Collaborate → Learn** to refine development.  
+  - Emphasizes rapid learning, flexibility, and customer involvement.  
 
-**Pseudocode:**
-```python
-start from any node
-mark it as visited
-while not all nodes are included:
-    select the smallest edge connecting a visited and unvisited node
-    mark the new node as visited
-    add edge to MST
-return MST
-```
-**Time Complexity:**  
-- Using **priority queue (Min-Heap): O(E log V)**  
+- **Key Phases:**  
+  1. **Speculate:** Initial planning based on current assumptions.  
+  2. **Collaborate:** Active teamwork and user feedback integration.  
+  3. **Learn:** Review progress, adapt strategies, and refine future development.  
 
----
+#### **c. Dynamic Systems Development Method (DSDM)**  
+- **Concept:**  
+  - An agile framework focused on delivering business-driven solutions efficiently.  
+  - Prioritizes active user involvement, iterative development, and frequent product releases.  
 
-## **5. Kruskal’s Algorithm (Minimum Spanning Tree)**
-**Approach:**  
-- Sort edges **by weight**.  
-- Pick the **smallest edge** that doesn’t form a cycle (use Disjoint Set).  
+- **Phases:**  
+  1. **Pre-Project:** Define scope and business objectives.  
+  2. **Feasibility Study:** Assess technical and financial viability.  
+  3. **Business Study:** Gather detailed requirements.  
+  4. **Iterative Development:** Implement features incrementally.  
+  5. **Deployment:** Deliver functional software to users.  
+  6. **Post-Project:** Evaluate project success and document lessons learned.  
 
-**Pseudocode:**
-```python
-sort(edges, by weight)
-for edge in sorted edges:
-    if adding edge doesn’t form a cycle:
-        add edge to MST
-return MST
-```
-**Time Complexity:**  
-- Sorting edges: **O(E log E)**
-- Union-Find operations: **O(E log V)**
-- **Total: O(E log E) ≈ O(E log V)**  
+These process models provide structured approaches for handling software development challenges while ensuring flexibility and quality.### **1. Personal Software Process (PSP) and Team Software Process (TSP)**  
 
----
+#### **a. Objectives**  
+- **PSP:**  
+  - Helps individual developers improve their productivity and quality of work.  
+  - Focuses on defect prevention, estimation accuracy, and personal responsibility.  
+  - Encourages continuous self-improvement through data collection and analysis.  
 
-## **6. Dijkstra’s Algorithm (Shortest Path)**
-**Approach:**  
-- Use a **priority queue** to explore the shortest distance to all nodes.  
+- **TSP:**  
+  - Extends PSP principles to teams for better project coordination.  
+  - Ensures structured planning, schedule management, and quality tracking.  
+  - Promotes teamwork, role assignment, and process discipline for successful project execution.  
 
-**Pseudocode:**
-```python
-initialize distance[source] = 0, others = ∞
-priority_queue.add(source, distance=0)
-while priority queue is not empty:
-    u = extract_min(priority_queue)
-    for each neighbor v of u:
-        if distance[u] + weight(u, v) < distance[v]:
-            update distance[v]
-            add/update v in priority queue
-return distance array
-```
-**Time Complexity:**  
-- Using **priority queue (Min-Heap): O(E log V)**  
+#### **b. Framework Activities**  
+- **PSP Framework Activities:**  
+  1. **Planning:** Estimate time, effort, and project size.  
+  2. **Design & Code Reviews:** Identify and fix defects early.  
+  3. **Development:** Implement code while tracking time and defects.  
+  4. **Testing:** Perform unit tests and analyze defect sources.  
+  5. **Postmortem Analysis:** Review performance and improve future processes.  
+
+- **TSP Framework Activities:**  
+  1. **Team Formation & Planning:** Define roles, objectives, and work breakdown.  
+  2. **Development & Quality Assurance:** Follow structured iterations, with team reviews.  
+  3. **Monitoring & Tracking:** Collect project metrics and adjust accordingly.  
+  4. **Postmortem & Process Refinement:** Conduct retrospectives to improve team efficiency.  
+
+#### **c. Examples**  
+- **PSP Example:** A developer working on a new feature estimates development time, tracks defect origins, and refines their process after analyzing results.  
+- **TSP Example:** A software team collaborates on a project, conducts regular reviews, and refines development strategies based on past performance.  
 
 ---
 
-### **Summary of Time Complexities**
-| Algorithm | Time Complexity |
-|-----------|----------------|
-| **Fractional Knapsack** | **O(n log n)** |
-| **Job Sequencing** | **O(n log n)** |
-| **Huffman Coding** | **O(n log n)** |
-| **Prim’s Algorithm** | **O(E log V)** |
-| **Kruskal’s Algorithm** | **O(E log V)** |
-| **Dijkstra’s Algorithm** | **O(E log V)** |
+### **2. Process Models**  
 
-Each of these algorithms follows the **Greedy approach**, making locally optimal choices at each step to achieve a globally optimal solution. 🚀
+#### **a. Aspect-Oriented Software Development (AOSD)**  
+- **Concept:**  
+  - Aims to improve modularity by separating cross-cutting concerns (e.g., logging, security, error handling) from core business logic.  
+  - Enhances maintainability by allowing independent development of aspects and core logic.  
+
+- **Diagram Representation:**  
+  - Various concerns (logging, security, error handling) are separately defined and then "woven" into the core application dynamically.  
+
+#### **b. Adaptive Software Development (ASD)**  
+- **Concept:**  
+  - Designed for projects with highly dynamic requirements.  
+  - Uses a continuous cycle of **Speculate → Collaborate → Learn** to refine development.  
+  - Emphasizes rapid learning, flexibility, and customer involvement.  
+
+- **Key Phases:**  
+  1. **Speculate:** Initial planning based on current assumptions.  
+  2. **Collaborate:** Active teamwork and user feedback integration.  
+  3. **Learn:** Review progress, adapt strategies, and refine future development.  
+
+#### **c. Dynamic Systems Development Method (DSDM)**  
+- **Concept:**  
+  - An agile framework focused on delivering business-driven solutions efficiently.  
+  - Prioritizes active user involvement, iterative development, and frequent product releases.  
+
+- **Phases:**  
+  1. **Pre-Project:** Define scope and business objectives.  
+  2. **Feasibility Study:** Assess technical and financial viability.  
+  3. **Business Study:** Gather detailed requirements.  
+  4. **Iterative Development:** Implement features incrementally.  
+  5. **Deployment:** Deliver functional software to users.  
+  6. **Post-Project:** Evaluate project success and document lessons learned.  
+
+These process models provide structured approaches for handling software development challenges while ensuring flexibility and quality.
